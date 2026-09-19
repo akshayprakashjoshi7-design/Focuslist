@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="description"
+        content="FocusList — futuristic productivity and task management dashboard."
+    >
+
+    <meta name="theme-color" content="#07111f">
+
+    <title>FocusList — Productivity Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         APP SHELL
+    ========================== -->
+    <div class="app-shell" id="appShell">
+
+        <!-- =========================
+             SIDEBAR
+        ========================== -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-top">
+
+                <button
+                    class="mobile-close"
+                    id="closeSidebar"
+                    aria-label="Close sidebar"
+                >
+                    ×
+                </button>
+
+                <a href="#" class="brand" id="brandHome">
+                    <span class="brand-icon">
+                        <span class="brand-core"></span>
+                    </span>
+
+                    <span class="brand-text">
+                        <strong>Focus<span>List</span></strong>
+                        <small>PRODUCTIVITY OS</small>
+                    </span>
+                </a>
+
+                <button
+                    class="collapse-btn"
+                    id="collapseSidebar"
+                    title="Collapse sidebar"
+                    aria-label="Collapse sidebar"
+                >
+                    <span>‹</span>
+                </button>
+
+            </div>
+
+            <div class="profile-mini" id="profileMini">
+
+                <div class="avatar" id="sidebarAvatar">A</div>
+
+                <div class="profile-mini-info">
+                    <strong id="sidebarName">Akshay</strong>
+                    <span>Local Workspace</span>
+                </div>
+
+                <button
+                    class="icon-btn tiny"
+                    id="openProfile"
+                    title="Profile"
+                    aria-label="Open profile"
+                >
+                    ⚙
+                </button>
+
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <div class="nav-label">WORKSPACE</div>
+
+                <button class="nav-item active" data-view="dashboard">
+                    <span class="nav-icon">⌂</span>
+                    <span class="nav-text">Dashboard</span>
+                    <span class="nav-count" id="navTotalCount">0</span>
+                </button>
+
+                <button class="nav-item" data-view="all">
+                    <span class="nav-icon">☷</span>
+                    <span class="nav-text">All Tasks</span>
+                </button>
+
+                <button class="nav-item" data-view="active">
+                    <span class="nav-icon">◉</span>
+                    <span class="nav-text">Active</span>
+                    <span class="nav-count" id="navActiveCount">0</span>
+                </button>
+
+                <button class="nav-item" data-view="completed">
+                    <span class="nav-icon">✓</span>
+                    <span class="nav-text">Completed</span>
+                    <span class="nav-count" id="navCompletedCount">0</span>
+                </button>
+
+                <div class="nav-label">TOOLS</div>
+
+                <button class="nav-item" id="quickAddNav">
+                    <span class="nav-icon">＋</span>
+                    <span class="nav-text">Quick Add</span>
+                    <kbd>N</kbd>
+                </button>
+
+                <button class="nav-item" id="exportNav">
+                    <span class="nav-icon">⇩</span>
+                    <span class="nav-text">Export Data</span>
+                </button>
+
+                <button class="nav-item" id="importNav">
+                    <span class="nav-icon">⇧</span>
+                    <span class="nav-text">Import Data</span>
+                </button>
+
+                <input
+                    type="file"
+                    id="importFile"
+                    accept=".json,application/json"
+                    hidden
+                >
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <div class="sidebar-tip">
+                    <div class="tip-orb">✦</div>
+
+                    <div>
+                        <strong>Focus Mode</strong>
+                        <p>Stay consistent. Small progress compounds.</p>
+                    </div>
+                </div>
+
+                <button class="nav-item" id="themeSidebarBtn">
+                    <span class="nav-icon" id="themeSidebarIcon">☾</span>
+                    <span class="nav-text">Appearance</span>
+                </button>
+
+                <div class="sidebar-footer">
+                    <span>FocusList v2.0</span>
+                    <span class="status-dot"></span>
+                    <span>Local</span>
+                </div>
+
+            </div>
+
+        </aside>
+
+        <!-- Sidebar backdrop -->
+        <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+        <!-- =========================
+             MAIN
+        ========================== -->
+        <main class="main-content">
+
+            <!-- TOPBAR -->
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button
+                        class="menu-btn"
+                        id="openSidebar"
+                        aria-label="Open navigation"
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+
+                    <div class="breadcrumb">
+                        <span>Workspace</span>
+                        <b>/</b>
+                        <strong id="breadcrumbCurrent">Dashboard</strong>
+                    </div>
+
+                </div>
+
+                <div class="topbar-actions">
+
+                    <button
+                        class="icon-btn"
+                        id="globalSearchBtn"
+                        title="Search"
+                        aria-label="Search"
+                    >
+                        ⌕
+                    </button>
+
+                    <button
+                        class="icon-btn theme-toggle"
+                        id="themeToggle"
+                        title="Change theme"
+                        aria-label="Change theme"
+                    >
+                        ☾
+                    </button>
+
+                    <button
+                        class="profile-button"
+                        id="profileButton"
+                        title="Open profile"
+                    >
+                        <span class="avatar small" id="topAvatar">A</span>
+
+                        <span class="profile-button-text">
+                            <strong id="topName">Akshay</strong>
+                            <small>Local</small>
+                        </span>
+
+                        <span class="chevron">⌄</span>
+                    </button>
+
+                </div>
+
+            </header>
+
+            <!-- CONTENT -->
+            <div class="content">
+
+                <!-- =========================
+                     HERO
+                ========================== -->
+                <section class="hero-section">
+
+                    <div class="hero-copy">
+
+                        <div class="eyebrow">
+                            <span class="pulse-dot"></span>
+                            PRODUCTIVITY SYSTEM ONLINE
+                        </div>
+
+                        <h1>
+                            Turn plans into
+                            <span class="gradient-text">progress.</span>
+                        </h1>
+
+                        <p>
+                            Organize your tasks, protect your focus,
+                            and keep moving forward.
+                        </p>
+
+                        <div class="hero-actions">
+
+                            <button class="primary-btn" id="addTaskBtn">
+                                <span>＋</span>
+                                Add New Task
+                            </button>
+
+                            <button class="secondary-btn" id="focusModeBtn">
+                                <span>◉</span>
+                                Focus Mode
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="hero-orbit">
+
+                        <div class="orbit orbit-1"></div>
+                        <div class="orbit orbit-2"></div>
+                        <div class="orbit orbit-3"></div>
+
+                        <div class="orbit-core">
+                            <span class="core-symbol">✦</span>
+
+                            <strong id="heroCompletion">0%</strong>
+                            <small>COMPLETE</small>
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- =========================
+                     STATS
+                ========================== -->
+                <section class="stats-grid">
+
+                    <article class="stat-card">
+                        <div class="stat-icon blue">☷</div>
+
+                        <div class="stat-info">
+                            <span>Total Tasks</span>
+                            <strong id="statTotal">0</strong>
+                        </div>
+
+                        <div class="stat-decoration"></div>
+                    </article>
+
+                    <article class="stat-card">
+                        <div class="stat-icon green">✓</div>
+
+                        <div class="stat-info">
+                            <span>Completed</span>
+                            <strong id="statCompleted">0</strong>
+                        </div>
+
+                        <div class="stat-trend" id="completedTrend">
+                            +0 today
+                        </div>
+                    </article>
+
+                    <article class="stat-card">
+                        <div class="stat-icon orange">◌</div>
+
+                        <div class="stat-info">
+                            <span>Pending</span>
+                            <strong id="statPending">0</strong>
+                        </div>
+
+                        <div class="stat-trend neutral" id="pendingTrend">
+                            0 active
+                        </div>
+                    </article>
+
+                    <article class="stat-card">
+                        <div class="stat-icon red">!</div>
+
+                        <div class="stat-info">
+                            <span>Overdue</span>
+                            <strong id="statOverdue">0</strong>
+                        </div>
+
+                        <div class="stat-trend danger">
+                            Need attention
+                        </div>
+                    </article>
+
+                </section>
+
+                <!-- =========================
+                     WORKSPACE GRID
+                ========================== -->
+                <section class="workspace-grid">
+
+                    <!-- LEFT -->
+                    <div class="workspace-main">
+
+                        <!-- Toolbar -->
+                        <div class="tasks-toolbar">
+
+                            <div class="toolbar-heading">
+                                <div>
+                                    <span class="section-kicker">YOUR WORKSPACE</span>
+
+                                    <h2 id="taskSectionTitle">
+                                        All Tasks
+                                    </h2>
+                                </div>
+
+                                <span class="result-count" id="resultCount">
+                                    0 tasks
+                                </span>
+                            </div>
+
+                            <div class="toolbar-controls">
+
+                                <div class="search-box">
+
+                                    <span class="search-icon">⌕</span>
+
+                                    <input
+                                        type="search"
+                                        id="searchInput"
+                                        placeholder="Search tasks..."
+                                        autocomplete="off"
+                                    >
+
+                                    <kbd>/</kbd>
+
+                                    <button
+                                        class="clear-search"
+                                        id="clearSearch"
+                                        aria-label="Clear search"
+                                    >
+                                        ×
+                                    </button>
+
+                                </div>
+
+                                <button
+                                    class="filter-toggle"
+                                    id="filterToggle"
+                                    title="Filters"
+                                >
+                                    ☷
+                                    <span>Filters</span>
+                                </button>
+
+                            </div>
+
+                            <!-- Filters -->
+                            <div class="filter-panel" id="filterPanel">
+
+                                <div class="filter-group">
+                                    <label>Status</label>
+
+                                    <div class="segmented" id="statusFilters">
+
+                                        <button
+                                            class="segment active"
+                                            data-status="all"
+                                        >
+                                            All
+                                        </button>
+
+                                        <button
+                                            class="segment"
+                                            data-status="active"
+                                        >
+                                            Active
+                                        </button>
+
+                                        <button
+                                            class="segment"
+                                            data-status="completed"
+                                        >
+                                            Completed
+                                        </button>
+
+                                    </div>
+                                </div>
+
+                                <div class="filter-group">
+                                    <label>Priority</label>
+
+                                    <div class="priority-filters">
+
+                                        <button
+                                            class="priority-chip active"
+                                            data-priority="all"
+                                        >
+                                            All
+                                        </button>
+
+                                        <button
+                                            class="priority-chip high"
+                                            data-priority="high"
+                                        >
+                                            High
+                                        </button>
+
+                                        <button
+                                            class="priority-chip medium"
+                                            data-priority="medium"
+                                        >
+                                            Medium
+                                        </button>
+
+                                        <button
+                                            class="priority-chip low"
+                                            data-priority="low"
+                                        >
+                                            Low
+                                        </button>
+
+                                    </div>
+                                </div>
+
+                                <div class="filter-group sort-group">
+                                    <label for="sortSelect">Sort</label>
+
+                                    <select id="sortSelect">
+                                        <option value="newest">
+                                            Newest first
+                                        </option>
+
+                                        <option value="oldest">
+                                            Oldest first
+                                        </option>
+
+                                        <option value="priority">
+                                            Priority
+                                        </option>
+
+                                        <option value="due">
+                                            Due date
+                                        </option>
+
+                                        <option value="alpha">
+                                            Alphabetical
+                                        </option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Task List -->
+                        <div class="task-list" id="taskList"></div>
+
+                        <!-- Empty State -->
+                        <div class="empty-state hidden" id="emptyState">
+
+                            <div class="empty-visual">
+                                <span>✓</span>
+                            </div>
+
+                            <h3 id="emptyTitle">No tasks found</h3>
+
+                            <p id="emptyText">
+                                Create a task and start building momentum.
+                            </p>
+
+                            <button
+                                class="primary-btn small"
+                                id="emptyAddBtn"
+                            >
+                                ＋ Create Task
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT -->
+                    <aside class="workspace-side">
+
+                        <!-- Progress -->
+                        <section class="side-card progress-card">
+
+                            <div class="side-card-header">
+                                <div>
+                                    <span class="section-kicker">ANALYTICS</span>
+                                    <h3>Productivity</h3>
+                                </div>
+
+                                <span class="live-badge">
+                                    LIVE
+                                </span>
+                            </div>
+
+                            <div class="progress-ring-wrap">
+
+                                <div class="progress-ring" id="progressRing">
+                                    <div class="progress-ring-inner">
+
+                                        <strong id="progressPercent">
+                                            0%
+                                        </strong>
+
+                                        <span>complete</span>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="progress-details">
+
+                                <div>
+                                    <span>Completed</span>
+                                    <strong id="progressCompleted">0</strong>
+                                </div>
+
+                                <div>
+                                    <span>Remaining</span>
+                                    <strong id="progressRemaining">0</strong>
+                                </div>
+
+                            </div>
+
+                            <div class="progress-bar">
+                                <span id="progressBarFill"></span>
+                            </div>
+
+                        </section>
+
+                        <!-- Streak -->
+                        <section class="side-card streak-card">
+
+                            <div class="streak-icon">🔥</div>
+
+                            <div class="streak-content">
+                                <span>Current streak</span>
+                                <strong>
+                                    <span id="streakCount">0</span>
+                                    <small>days</small>
+                                </strong>
+                                <p id="streakMessage">
+                                    Complete a task today to build your streak.
+                                </p>
+                            </div>
+
+                        </section>
+
+                        <!-- Priority -->
+                        <section class="side-card priority-card">
+
+                            <div class="side-card-header">
+                                <div>
+                                    <span class="section-kicker">BREAKDOWN</span>
+                                    <h3>Priority</h3>
+                                </div>
+                            </div>
+
+                            <div class="priority-bars">
+
+                                <div class="priority-row">
+
+                                    <div class="priority-label">
+                                        <span class="priority-dot high"></span>
+                                        High
+                                        <strong id="highCount">0</strong>
+                                    </div>
+
+                                    <div class="mini-bar">
+                                        <span
+                                            id="highBar"
+                                            class="high"
+                                        ></span>
+                                    </div>
+
+                                </div>
+
+                                <div class="priority-row">
+
+                                    <div class="priority-label">
+                                        <span class="priority-dot medium"></span>
+                                        Medium
+                                        <strong id="mediumCount">0</strong>
+                                    </div>
+
+                                    <div class="mini-bar">
+                                        <span
+                                            id="mediumBar"
+                                            class="medium"
+                                        ></span>
+                                    </div>
+
+                                </div>
+
+                                <div class="priority-row">
+
+                                    <div class="priority-label">
+                                        <span class="priority-dot low"></span>
+                                        Low
+                                        <strong id="lowCount">0</strong>
+                                    </div>
+
+                                    <div class="mini-bar">
+                                        <span
+                                            id="lowBar"
+                                            class="low"
+                                        ></span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                        <!-- Quick Actions -->
+                        <section class="side-card quick-card">
+
+                            <div class="side-card-header">
+                                <div>
+                                    <span class="section-kicker">QUICK ACTIONS</span>
+                                    <h3>Manage</h3>
+                                </div>
+                            </div>
+
+                            <div class="quick-actions">
+
+                                <button id="clearCompletedBtn">
+                                    <span>✓</span>
+                                    Clear completed
+                                </button>
+
+                                <button id="exportBtn">
+                                    <span>⇩</span>
+                                    Export workspace
+                                </button>
+
+                                <button id="resetBtn" class="danger-action">
+                                    <span>↻</span>
+                                    Reset demo data
+                                </button>
+
+                            </div>
+
+                        </section>
+
+                    </aside>
+
+                </section>
+
+                <!-- Footer -->
+                <footer class="app-footer">
+
+                    <div>
+                        <strong>FocusList</strong>
+                        <span>Built for focused execution.</span>
+                    </div>
+
+                    <div class="footer-shortcuts">
+                        <span><kbd>N</kbd> New task</span>
+                        <span><kbd>/</kbd> Search</span>
+                        <span><kbd>Esc</kbd> Close</span>
+                    </div>
+
+                </footer>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- =========================
+         MOBILE BOTTOM NAV
+    ========================== -->
+    <nav class="mobile-nav">
+
+        <button class="mobile-nav-item active" data-mobile-view="dashboard">
+            <span>⌂</span>
+            <small>Home</small>
+        </button>
+
+        <button class="mobile-nav-item" data-mobile-view="all">
+            <span>☷</span>
+            <small>Tasks</small>
+        </button>
+
+        <button
+            class="mobile-add"
+            id="mobileAddBtn"
+            aria-label="Add task"
+        >
+            ＋
+        </button>
+
+        <button class="mobile-nav-item" data-mobile-view="active">
+            <span>◉</span>
+            <small>Active</small>
+        </button>
+
+        <button
+            class="mobile-nav-item"
+            id="mobileProfileBtn"
+        >
+            <span>●</span>
+            <small>Profile</small>
+        </button>
+
+    </nav>
+
+    <!-- =========================
+         TASK MODAL
+    ========================== -->
+    <div
+        class="modal-overlay"
+        id="taskModal"
+        aria-hidden="true"
+    >
+
+        <div class="modal task-modal">
+
+            <div class="modal-header">
+
+                <div>
+                    <span class="modal-kicker" id="taskModalKicker">
+                        NEW TASK
+                    </span>
+
+                    <h2 id="taskModalTitle">
+                        Create a task
+                    </h2>
+                </div>
+
+                <button
+                    class="modal-close"
+                    data-close-modal="taskModal"
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <form id="taskForm">
+
+                <input type="hidden" id="taskId">
+
+                <div class="form-group">
+
+                    <label for="taskTitle">
+                        Task title <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="taskTitle"
+                        maxlength="120"
+                        placeholder="e.g. Complete Physics assignment"
+                        required
+                        autocomplete="off"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="taskDescription">
+                        Notes
+                    </label>
+
+                    <textarea
+                        id="taskDescription"
+                        rows="3"
+                        maxlength="500"
+                        placeholder="Add context, notes or details..."
+                    ></textarea>
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="taskPriority">
+                            Priority
+                        </label>
+
+                        <select id="taskPriority">
+                            <option value="high">High</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="taskDueDate">
+                            Due date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="taskDueDate"
+                        >
+
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="taskDueTime">
+                            Due time
+                        </label>
+
+                        <input
+                            type="time"
+                            id="taskDueTime"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="taskTags">
+                            Tags
+                        </label>
+
+                        <input
+                            type="text"
+                            id="taskTags"
+                            placeholder="study, coding, urgent"
+                            maxlength="150"
+                        >
+
+                    </div>
+
+                </div>
+
+                <label class="pin-option">
+
+                    <input
+                        type="checkbox"
+                        id="taskPinned"
+                    >
+
+                    <span class="custom-checkbox"></span>
+
+                    <span>
+                        Pin this task to the top
+                    </span>
+
+                </label>
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        class="secondary-btn"
+                        data-close-modal="taskModal"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+                        <span id="saveTaskText">Create Task</span>
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         PROFILE MODAL
+    ========================== -->
+    <div
+        class="modal-overlay"
+        id="profileModal"
+        aria-hidden="true"
+    >
+
+        <div class="modal profile-modal">
+
+            <div class="modal-header">
+
+                <div>
+                    <span class="modal-kicker">LOCAL WORKSPACE</span>
+                    <h2>Your profile</h2>
+                </div>
+
+                <button
+                    class="modal-close"
+                    data-close-modal="profileModal"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div class="profile-preview">
+
+                <div class="avatar large" id="profileAvatar">
+                    A
+                </div>
+
+                <div>
+                    <strong id="profilePreviewName">
+                        Akshay
+                    </strong>
+
+                    <span>
+                        Frontend demo profile
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="demo-warning">
+                <span>ⓘ</span>
+                This is a local demo profile. No real password or
+                authentication is used.
+            </div>
+
+            <form id="profileForm">
+
+                <div class="form-group">
+
+                    <label for="profileName">
+                        Display name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="profileName"
+                        maxlength="40"
+                        placeholder="Your name"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="profileEmail">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="profileEmail"
+                        maxlength="100"
+                        placeholder="you@example.com"
+                    >
+
+                </div>
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        class="secondary-btn"
+                        data-close-modal="profileModal"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+                        Save Profile
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         CONFIRM MODAL
+    ========================== -->
+    <div
+        class="modal-overlay"
+        id="confirmModal"
+        aria-hidden="true"
+    >
+
+        <div class="modal confirm-modal">
+
+            <div class="confirm-icon" id="confirmIcon">
+                !
+            </div>
+
+            <h2 id="confirmTitle">
+                Are you sure?
+            </h2>
+
+            <p id="confirmText">
+                This action cannot be undone.
+            </p>
+
+            <div class="modal-actions">
+
+                <button
+                    class="secondary-btn"
+                    data-close-modal="confirmModal"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    class="danger-btn"
+                    id="confirmAction"
+                >
+                    Confirm
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         FOCUS MODE
+    ========================== -->
+    <div
+        class="focus-overlay"
+        id="focusOverlay"
+    >
+
+        <div class="focus-panel">
+
+            <button
+                class="modal-close"
+                id="closeFocusMode"
+            >
+                ×
+            </button>
+
+            <div class="focus-kicker">
+                FOCUS MODE
+            </div>
+
+            <div class="focus-orb">
+                <span>✦</span>
+            </div>
+
+            <h2>Deep work activated.</h2>
+
+            <p>
+                Remove distractions and focus on one thing at a time.
+            </p>
+
+            <div class="focus-stats">
+                <div>
+                    <strong id="focusPending">0</strong>
+                    <span>tasks pending</span>
+                </div>
+
+                <div>
+                    <strong id="focusPriority">0</strong>
+                    <span>high priority</span>
+                </div>
+            </div>
+
+            <button
+                class="primary-btn"
+                id="focusAddBtn"
+            >
+                ＋ Add Focus Task
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         TOASTS
+    ========================== -->
+    <div
+        class="toast-container"
+        id="toastContainer"
+        aria-live="polite"
+    ></div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
